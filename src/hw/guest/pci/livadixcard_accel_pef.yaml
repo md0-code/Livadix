@@ -1,0 +1,37 @@
+# The Livadix Display Card's native accelerated QuickDraw: a PowerPC code fragment of its own, packed by tools/pcirom.py into a
+# PEF container (Mac OS Runtime Architectures, chapter 8) from the assembled
+# src/hw/guest/pci/livadixcard_accel_ppc.s, its main symbol the transition
+# vector of install. The NuBus card's SecondaryInit
+# (src/hw/guest/declrom/livadixcard_accel.s) and the PCI card's native driver
+# (livadixvideo_pci.s) carry it and prepare it with GetMemFragment.
+
+fragment: livadixcard_accel_ppc.bin
+
+imports:
+  - name: InterfaceLib
+    symbols:
+      - CallUniversalProc
+      - GetToolTrapAddress
+      - SetToolTrapAddress
+      - ShieldCursor
+      - ShowCursor
+
+# Relocations in section 1 (data), from its start (Mac OS Runtime
+# Architectures, chapter 8, "Relocations"):
+#   words 0-4: the imports' transition vectors (RelocImportRun)
+#   words 5-10: three transition vectors [code, TOC] (install and the two
+#     patches; RelocBySectC, RelocBySectD)
+#   words 11-26: two routine descriptors of eight words, each relocating
+#     its procedure (its sixth word: 16, 24) by the data section's address
+relocations:
+  - [import, 5]
+  - [code, 1]
+  - [data, 1]
+  - [code, 1]
+  - [data, 1]
+  - [code, 1]
+  - [data, 1]
+  - [skip, 5]
+  - [data, 1]
+  - [skip, 7]
+  - [data, 1]

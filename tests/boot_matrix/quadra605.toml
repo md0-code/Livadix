@@ -1,0 +1,39 @@
+# The LC 475, LC 575, Quadra 605 and Performa 475, 476, 575, 577 and 578
+# family's boot matrix (tests/verify.py, check os-boot; the keys are
+# described there). One board (src/hw/machines/quadra605.c) and one ROM,
+# told apart by the CPU ID register: each cell names its model. Every run
+# is headless, on work copies of the images.
+
+model = "quadra-605"
+rom = "quadra-605.rom"
+ram_mb = 20
+# What every System reports on these machines (Inside Macintosh: Operating
+# System Utilities, "Gestalt Manager"): the 68LC040 (proc 5), its MMU
+# (mmu 4) and no FPU. Machine types: LC 575 Developer Note, "Machine
+# Identification" (92), and the ROM's ProductInfo records (box flags 83,
+# 86 and 88 plus 6: docs/NOTES.md).
+gestalt = { proc = 5, "mmu " = 4, "fpu " = 0 }
+
+[media]
+"cd.img" = { kib = 800, name = "Livadix CD" }
+"floppy-hd.img" = { kib = 1440, name = "Livadix HD Floppy" }
+"floppy-dd.img" = { kib = 800, name = "Livadix Floppy" }
+
+# --- Quadra 605 -----------------------------------------------------------------------
+
+# The built-in video's other monitors at 8 bits (the ROM's start screen).
+[[cell]]
+name = "Quadra 605, 512x384"
+resolution = "512x384"
+max = 150_000_000
+screen = true
+[[cell]]
+name = "Quadra 605, 640x870"
+resolution = "640x870"
+max = 150_000_000
+screen = true
+[[cell]]
+name = "Quadra 605, 1152x870"
+resolution = "1152x870"
+max = 150_000_000
+screen = true

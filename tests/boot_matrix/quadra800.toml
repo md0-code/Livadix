@@ -1,0 +1,39 @@
+# The Centris/Quadra 610, 650 and Quadra 800 family's boot matrix
+# (tests/verify.py, check os-boot; the keys are described there). One board
+# (src/hw/machines/quadra800.c), told apart by its VIA1 identity: each cell
+# names its model and ROM. Every run is headless, on work copies of the
+# images.
+
+model = "quadra-800"
+rom = "quadra-800.rom"
+ram_mb = 24
+# What every System reports on these machines (Inside Macintosh: Operating
+# System Utilities, "Gestalt Manager"): the 68040 or 68LC040 (proc 5) and
+# its MMU (mmu 4). Machine types: Developer Note Number 3, Table 4-2, and
+# the Quadra 610 and 650 Developer Note, Table 1-2.
+gestalt = { proc = 5, "mmu " = 4 }
+
+[media]
+"cd.img" = { kib = 800, name = "Livadix CD" }
+"floppy-hd.img" = { kib = 1440, name = "Livadix HD Floppy" }
+"floppy-dd.img" = { kib = 800, name = "Livadix Floppy" }
+
+# --- Quadra 800 -----------------------------------------------------------------------
+
+# The built-in video at 16 bits with its 1 MB of VRAM (Developer Note,
+# Table 1-4): the ROM finds the DAC that drives 16 bits (its configuration
+# registers indexed, dafb.h) and takes the 16-bit sResources (rows of 2048
+# bytes at 640 x 480, 1664 at 832 x 624).
+[[cell]]
+name = "Quadra 800, 640x480x16"
+depth = 16
+video_card = "builtin"
+max = 60_000_000
+screen = "640x480, 16 bits, 2048 bytes per row"
+[[cell]]
+name = "Quadra 800, 832x624x16"
+resolution = "832x624"
+depth = 16
+video_card = "builtin"
+max = 60_000_000
+screen = "832x624, 16 bits, 1664 bytes per row"

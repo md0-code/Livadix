@@ -1,0 +1,24 @@
+# The Macintosh ROMs and disk images: user-supplied, never committed.
+/roms/
+/data/
+# Development files kept locally, never committed.
+/AGENTS.md
+/PLAN.md
+/ISSUES.md
+/TODO.md
+/docs/DEVELOPMENT.md
+/docs/dev/
+# Development tools, scratch and test output; build trees; the distribution.
+/work/
+/build/
+/dist/
+# A configuration and PRAM written by running Livadix in the repository root.
+/livadix.yaml
+*.nvram
+/nvram/
+# Editors, assistants and Python.
+.claude/settings.local.json
+.vscode/
+.venv/
+__pycache__/
+*.py[cod]

@@ -1,0 +1,54 @@
+# The Livadix Display Card's declaration ROM, built by
+# tools/declrom.py into src/hw/guest/bin/livadixcard.bin. The structures are
+# those of Designing Cards and Drivers for the Macintosh Family, 3rd ed.,
+# chapter 8 (format block, sResource directory, board sResource, video
+# sResources and their depth mode lists, sDriver directory, gamma
+# directory) and chapter 9 (the video parameter records).
+
+# All four NuBus byte lanes ($0F, Table 8-2); format 1 (Apple), revision 1.
+byte_lanes: 0x0F
+revision: 1
+
+board:
+  id: 1                          # the board sResource's ID (0-127: Apple's)
+  board_id: 0x4D43               # † not assigned by Apple: an unused value
+  name: Livadix Display Card
+  # The slot's six PRAM bytes on a new card: vendorUse1, the depth mode
+  # the system starts in (the 8-bit mode); the rest unused.
+  pram: [0x83, 0, 0, 0, 0, 0]
+  primary_init: livadixcard_init    # src/hw/guest/bin/<name>.bin, run on the 68020 and later
+  secondary_init: livadixcard_accel # run once the System's patches are in: the accelerated QuickDraw
+  vendor:
+    id: Livadix
+    revision: "1.0"
+    part: Livadix Display Card
+
+video:
+  # sRsrcType: CatDisplay, TypVideo, DrSWApple, the card's own DrHW (†
+  # not assigned by Apple).
+  category: 3
+  ctype: 1
+  drsw: 1
+  drhw: 0x4D43
+  name: Display_Video_Apple_Livadix
+  driver: livadixvideo              # src/hw/guest/bin/<name>.bin, the sDriver for the 68020 and later
+  flags: 6                       # fOpenAtStart, f32BitMode: the VRAM at $Fs00 0000
+  hw_dev_id: 1
+  # QuickDraw's bit-field CopyBits loop (rMask0, BFEXTU) reads up to four
+  # bytes below row 0 when copying from its first longword to a pixel further
+  # right in a destination longword: the screen starts 64 bytes into VRAM.
+  minor_base: 0x40               # VRAM offset in standard slot space
+  vram: 0x200000                 # 2 MiB (MinorLength)
+  first_id: 128                  # resolution n is video sResource 128 + n
+  # The card's RES table order (src/hw/livadix_card.h) and docs/NOTES.md's.
+  resolutions: [512x342, 512x384, 640x400, 640x480, 800x600, 832x624, 1024x768, 1152x864, 1152x870, 1280x1024,
+                1600x1200, 1920x1080]
+  depths: [1, 2, 4, 8, 16, 32]   # depth modes 128-133; a mode is listed when it fits the VRAM
+  dpi: 72
+  # Gamma tables, the first the default (sGammaDir): output = 255 *
+  # (input / 255) ^ exponent, one table for the three channels.
+  gamma:
+    - name: Livadix Linear
+      exponent: 1.0
+    - name: Mac Standard (1.8) on sRGB
+      exponent: 0.8181818        # 1.8 / 2.2: a picture made for a 1.8 display, on a 2.2 one

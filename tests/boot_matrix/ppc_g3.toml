@@ -1,0 +1,21 @@
+# Beige G3 with unmodified ROMs, started without a disk.
+model = "power-macintosh-g3"
+rom = "power-macintosh-g3.rom"
+runner = "ppc"
+jit = true
+ram_mb = 64
+
+[[cell]]
+name = "G3 Desktop, POST and Screamer chime"
+quick = true
+seconds = 6
+screen = true
+chime = true
+
+[[cell]]
+name = "G3 All-in-One, maximum 384 MB and POST"
+model = "power-macintosh-g3-all-in-one"
+ram_mb = 384
+seconds = 6
+screen = true
+chime = true

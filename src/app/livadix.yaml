@@ -1,0 +1,182 @@
+# Livadix configuration. Without this file Livadix uses embedded defaults. Save
+# in the configuration window creates it; press the Windows key (Super on
+# Linux) in Livadix's window for the configuration window. Livadix's configuration
+# guide lists every key. Paths are relative to this file.
+#
+# A profile (PROFILES, at the end) pairs a Macintosh model with its disks
+# and settings. The sections before it hold the settings every profile
+# shares; a profile overrides any of them. Keys commented out below take
+# the model's value; uncomment one to override it.
+
+# The profile Livadix starts without --profile (else the first one).
+default: "Built-in"
+
+# EMULATION
+emulation:
+  # ROM file: without one, Livadix finds the ROM by its checksum among the
+  # files of roms/ beside livadix.exe and beside this file, whatever their
+  # names (`livadix --list-roms` lists what each file holds). A file named
+  # here, anywhere, must hold the model's ROM. The Built-in machine's ROM
+  # is inside livadix.exe.
+  # rom: roms/quadra-700.rom
+
+  # Guest RAM in MiB, 4 to 1024 and no more than the real machine's maximum.
+  # ram_mb: 4
+
+  # The clock of the Macintosh's CPU in MHz, 1 to 10000 (decimals allowed,
+  # such as 33.33); a model's default is its nominal clock. The 68k CPUs
+  # use Motorola instruction timings. PowerPC timing is approximate, so
+  # matching MHz does not guarantee original hardware performance.
+  # cpu_mhz: 25
+
+  # Translate the Macintosh code to x64 as it runs (true) or interpret it
+  # (false).
+  jit: true
+
+  # The ROM's startup chime: true or false (false: played but not heard).
+  startup_sound: true
+
+  # 68040 machines: false (as the real chip) leaves the floating-point
+  # instructions and data types the 68040 does not implement (sine, cosine,
+  # logarithms, constants, packed decimal, denormalized numbers) to the
+  # system's emulation package; true runs them all in Livadix's FPU, faster.
+  fpu_full: false
+
+  # The Macintosh II's PMMU socket: false (the AMU, 24-bit addressing only)
+  # or true, a 68851 PMMU fitted, which System 7's virtual memory and, with
+  # MODE32, 32-bit addressing need.
+  pmmu: false
+
+  # The ADB, clock and power controller of the models that have Egret or
+  # Cuda: auto (Apple's firmware when its dump is in a roms folder, under
+  # any name, else the protocol model), protocol, or firmware (the dump is
+  # required: Livadix does not start without it).
+  controller: auto
+
+  # Closing the window: shutdown (the Macintosh shuts down as its user would
+  # make it, saving and closing its disks, then Livadix quits; closing again
+  # quits at once) or quit (at once, like pulling the plug: the disks are
+  # left as they were and the next start may not find the startup disk).
+  close_action: shutdown
+
+  # Seconds the shutdown may take before Livadix quits anyway (1 to 3600).
+  close_timeout: 30
+
+  # Parameter RAM (PRAM) base path in the nvram folder beside this file.
+  # The actual filename adds the model, ROM checksum and profile identity.
+  # Save preserves the identity through renames; Duplicate creates a new one.
+  # Older PRAM files are kept unchanged and never imported automatically.
+  # nvram: nvram/livadix.nvram
+
+# VIDEO: resolution (512x342, 512x384, 640x400, 640x480, 800x600, 832x624,
+# 1024x768, 1152x864, 1152x870, 1280x1024, 1600x1200 or 1920x1080), depth
+# (1 black & white, 2, 4, 8, 16 or 32 bits; the mode must fit 2 MiB) and
+# screen refresh in frames per second (60, 30, 20, 15, 12 or 10).
+# card: the display that shows the screen: auto (the machine's built-in
+# video when it offers the resolution and depth, else the Livadix Display
+# Card in a free NuBus slot), builtin or livadix. acceleration: the card's
+# blitter speeds up QuickDraw's drawing on its screen (true) or is unused.
+# The window's look: plain, crt (curved glass, scanlines) or lcd (flat, a
+# faint pixel grid), on a color monitor (color), a white monochrome CRT (mono) or a
+# PowerBook grayscale LCD (lcd-gray): monitor.
+# The window: filter sharp (crisp pixels, edges smoothed only where the
+# window is not a whole multiple of the screen), nearest or linear (soft);
+# scale fit (fill the window) or integer (the largest whole multiple,
+# centered); fullscreen at start (Alt+Enter toggles); vsync (wait for the
+# display: no tearing).
+video:
+  refresh: 60
+  card: auto
+  acceleration: true
+  # resolution: 1152x870
+  # depth: 8
+  # look: plain
+  # monitor: color
+  filter: sharp
+  scale: fit
+  fullscreen: false
+  vsync: true
+
+# STORAGE: up to ten hard disk images (disks:, usually in each profile),
+# each an HFS volume; the Macintosh writes its changes into the image
+# itself, and readonly: true protects one from any write. scsi_id: 0, 1,
+# 2, 4, 5 or 6 places a disk on that SCSI ID (the CD-ROM drive is 3);
+# disks without one take the free IDs in order. Up to two floppy drives,
+# each {} (empty), off, or a raw 400, 720, 800 or 1440 KiB image or a
+# DiskCopy 4.2 image, written in place unless readonly: true. A CD-ROM
+# disc image (read-only); without one the drive is empty. Dropping an
+# image file on the window inserts it. Which device the Macintosh starts
+# from first: disk or cdrom.
+storage:
+  floppies:
+    - {}
+  # cdrom: data/disk/install.iso
+  boot_priority: disk
+
+# SOUND: Macintosh sound output on or off.
+sound:
+  enabled: true
+
+# INPUT: keyboard layout (usa or iso), the key that acts as Command (left-alt,
+# right-alt, left-control or right-control; the other Alt key is Option,
+# Control is Control) and each mouse button (normal, disabled or
+# control-click; at least one stays normal).
+input:
+  keyboard:
+    layout: usa
+    command: left-alt
+  mouse:
+    left: normal
+    right: normal
+
+# PORTS: modem (a) and printer (b) ports, each one of serial: COMn,
+# pipe: '\\.\pipe\name', output: file or disabled: true.
+# ports:
+#   a: {serial: COM3}
+#   b: {output: printer.prn}
+
+# NETWORK: the Macintosh's Ethernet. mode: nat (a private network whose
+# router leads to the Internet through this computer's own connections:
+# nothing to install, no administrator rights; the Macintosh gets
+# 10.0.2.15 by DHCP or BOOTP, the router and this computer are 10.0.2.2,
+# the DNS server 10.0.2.3) or none (no cable). forward: ports of this
+# computer that lead to the Macintosh, each tcp or udp, an optional address
+# to listen on (127.0.0.1 unless given; 0.0.0.0 opens it to the local
+# network), this computer's port and the Macintosh's.
+network:
+  mode: nat
+  # forward: ["tcp:8080:80", "udp:0.0.0.0:5353:53"]
+
+# SHARING: folders of this computer as AppleShare volumes on the Ethernet.
+# On the Macintosh: AppleTalk set to Ethernet (the AppleTalk or Network
+# control panel), then the Chooser, AppleShare, the server (name, Livadix by
+# default). folders: each a path, an optional name (the folder's own
+# otherwise; at most 27 characters) and readonly. metadata: streams (type,
+# creator, icons and resource forks in NTFS streams) or appledouble (in
+# "._" files beside each file). password: empty for guests, or at most 8
+# characters asked of every user.
+# sharing:
+#   name: Livadix
+#   folders:
+#     - {name: PC, path: C:/Users/Me/MacShare, readonly: false}
+#   metadata: streams
+#   password: ""
+
+# PROFILES: each one a name and its settings. model: the Macintosh to
+# build, which sets the ROM, memory, CPU speed, display and look of a real
+# Macintosh (`livadix --list-models` lists them); builtin, also when a profile
+# names none, is Livadix's own machine, which needs no Apple ROM and shows
+# Livadix's README and changelog. Any section above may follow, and its keys
+# override the shared ones one by one (a list such as disks: as a whole).
+# Start one with `livadix --profile NAME`; `livadix --list-profiles` lists them.
+profiles:
+  "Built-in":
+    model: builtin
+  # A Macintosh of your own: its ROM in roms/ (any file name), its disk image.
+  "Mac OS 8.0":
+    model: quadra-700
+    emulation:
+      ram_mb: 20
+    storage:
+      disks:
+        - image: data/disk/HD240.HF8

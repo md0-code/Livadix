@@ -1,0 +1,45 @@
+# Capella / F108 / PrimeTime II / Valkyrie, ROM 63ABFD3F.
+# Headless, translated, Cuda firmware; disks are clean-unmounted work copies.
+model = 5200
+rom = "power-macintosh-5200.rom"
+runner = "ppc"
+jit = true
+cuda = "firmware"
+ram_mb = 64
+disk_bus = "ata"
+
+[[cell]]
+name = "5200, POST"
+quick = true
+model = 5200
+seconds = 12
+screen = true
+chime = true
+gestalt = { mach = 41 }
+
+[[cell]]
+name = "5300, POST"
+quick = true
+model = 5300
+seconds = 12
+screen = true
+chime = true
+gestalt = { mach = 41 }
+
+[[cell]]
+name = "6200, POST"
+quick = true
+model = 6200
+seconds = 12
+screen = true
+chime = true
+gestalt = { mach = 42 }
+
+[[cell]]
+name = "6300, POST"
+quick = true
+model = 6300
+seconds = 12
+screen = true
+chime = true
+gestalt = { mach = 42 }

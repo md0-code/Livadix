@@ -1,0 +1,23 @@
+# The PowerBook G3 Series (Wallstreet and PDQ): unmodified ROMs, the internal
+# ATA disk, the power manager and the PCI Livadix Display Card as the screen.
+# They need Mac OS 8.1 or later: Mac OS 9.0.4 is the System of these cells.
+model = "powerbook-g3-wallstreet"
+rom = "powerbook-g3-wallstreet.rom"
+runner = "ppc"
+jit = true
+ram_mb = 64
+disk_bus = "ata"
+
+[[cell]]
+name = "Wallstreet, start-up chime"
+seconds = 8
+screen = true
+chime = true
+
+[[cell]]
+name = "PDQ, start-up chime"
+model = "powerbook-g3-pdq"
+rom = "powerbook-g3-pdq.rom"
+seconds = 8
+screen = true
+chime = true

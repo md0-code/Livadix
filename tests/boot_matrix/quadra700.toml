@@ -1,0 +1,37 @@
+# The Quadra 700's boot matrix (tests/verify.py, check os-boot; the keys are
+# described there). Every run is headless, on work copies of the images.
+
+model = "quadra-700"
+rom = "quadra-700.rom"
+ram_mb = 20
+# What every System must report on the Quadra 700 (Inside Macintosh VI and
+# the Gestalt Manager chapter of Inside Macintosh: Operating System
+# Utilities): machine type 22, the 68040 (proc 5), its built-in FPU (fpu 3)
+# and MMU (mmu 4).
+gestalt = { mach = 22, proc = 5, "fpu " = 3, "mmu " = 4 }
+
+[media]
+"cd.img" = { kib = 800, name = "Livadix CD" }
+"floppy-hd.img" = { kib = 1440, name = "Livadix HD Floppy" }
+"floppy-dd.img" = { kib = 800, name = "Livadix Floppy" }
+"floppy-blank.img" = { kib = 800 }
+
+# emulation.startup_sound: false mutes the chime (what follows it is the
+# EASC holding its last decoded sample, a level of a few units).
+[[cell]]
+name = "startup_sound false"
+resolution = "1152x870"
+max = 100_000_000
+silent = 64
+note = "the chime muted"
+
+# The DAFB's 32 bits with four banks of VRAM (Developer Note, Table 1-1):
+# the ROM's 13" sResource for four banks lists 1-8 and 32 bits, the
+# 32-bit mode as $84 in the slot PRAM (rows of 4096 bytes); System 7.1 at
+# the Finder in it.
+[[cell]]
+name = "Quadra 700, 640x480x32"
+resolution = "640x480"
+depth = 32
+max = 60_000_000
+screen = "640x480, 32 bits, 4096 bytes per row"

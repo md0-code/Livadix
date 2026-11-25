@@ -1,0 +1,48 @@
+# The Power Macintosh 6100, 7100 and 8100's boot matrix (tests/verify.py,
+# check os-boot; runner "ppc": mc_ppc_pdm_boot, keys in run_ppc_cell). Every
+# run is headless, on work copies of the images, with the translator and
+# Cuda's own firmware (roms/cuda-341s0788.bin) unless a cell says
+# cuda = "protocol".
+
+model = 7100
+rom = "power-macintosh-6100.rom"
+runner = "ppc"
+jit = true
+cuda = "firmware"
+ram_mb = 16
+post_clean = true
+
+# Blank floppies inserted at the Finder and a CD (tests/hfs_blank.py).
+[media]
+"cd.img" = { kib = 800, name = "Livadix CD" }
+"floppy-hd.img" = { kib = 1440, name = "Livadix HD Floppy" }
+"floppy-dd.img" = { kib = 800, name = "Livadix Floppy" }
+
+# The POST with its chime, to the floppy prompt; Gestalt's machine type is
+# the box flag the ROM picks from the measured clock ($FFC0139C): 75.
+[[cell]]
+name = "6100, POST"
+quick = true
+model = 6100
+seconds = 8
+screen = true
+chime = true
+gestalt = { mach = 75 }
+
+# The 8100 at 80 MHz: box flag $3B, Gestalt 65 (the Developer Note's Table 1-5).
+[[cell]]
+name = "8100, POST"
+chime = true
+quick = true
+model = 8100
+seconds = 8
+screen = true
+gestalt = { mach = 65 }
+
+[[cell]]
+name = "7100, POST"
+model = 7100
+seconds = 12
+screen = true
+chime = true
+gestalt = { mach = 112 }

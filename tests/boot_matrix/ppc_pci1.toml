@@ -1,0 +1,235 @@
+# The first PCI Power Macintosh generation's boot matrix (tests/verify.py,
+# check os-boot; runner "ppc": mc_ppc_pdm_boot, keys in run_ppc_cell). Every
+# run is headless, on work copies of the images, with the translator; the
+# boards are machines/pci1.c, `model` the catalogue model's number. Gestalt's
+# machine type is the box flag + 6 (the ROM's ProductInfo by Hammerhead's
+# identification and straps and Grand Central's board ID, ROM $FFC14844).
+
+model = 7500
+rom = "power-macintosh-7200.rom"
+runner = "ppc"
+jit = true
+cuda = "firmware"
+post_clean = true
+ram_mb = 24
+
+# POST with its chime, Open Firmware, the 68k start-up to the floppy prompt
+# on Control's 640 x 480; Gestalt 68.
+[[cell]]
+name = "7500, POST"
+quick = true
+seconds = 12
+screen = true
+chime = true
+gestalt = { mach = 68 }
+
+# The 7200: Platinum's picture, Gestalt 108.
+[[cell]]
+name = "7200, POST"
+quick = true
+model = 7200
+seconds = 12
+screen = true
+chime = true
+gestalt = { mach = 108 }
+
+# The 8500 (604, Sixty6): Gestalt 69.
+[[cell]]
+name = "8500, POST"
+model = 8500
+seconds = 12
+screen = true
+gestalt = { mach = 69 }
+
+# The 9500 and the 9600: two Bandits, no built-in video; the PCI Livadix
+# Display Card in Bandit 1 slot 13 is the screen. Gestalt 67.
+[[cell]]
+name = "9500, POST"
+model = 9500
+seconds = 12
+screen = true
+gestalt = { mach = 67 }
+
+[[cell]]
+name = "9600, POST"
+model = 9600
+rom = "power-macintosh-7300.rom"
+seconds = 12
+screen = true
+gestalt = { mach = 67 }
+
+# The 7300-9600 ROM on the 7600 and 8600 boards.
+[[cell]]
+name = "7600, POST"
+model = 7600
+rom = "power-macintosh-7300.rom"
+seconds = 12
+screen = true
+gestalt = { mach = 68 }
+
+[[cell]]
+name = "8600, POST"
+model = 8600
+rom = "power-macintosh-7300.rom"
+seconds = 12
+screen = true
+gestalt = { mach = 69 }
+
+# The 16-inch monitor (sense $2D) and the 21-inch (sense 0) on Control.
+[[cell]]
+name = "7500, POST, 832x624"
+seconds = 12
+resolution = "832x624"
+screen = true
+
+[[cell]]
+name = "7500, POST, 1152x870"
+seconds = 12
+resolution = "1152x870"
+screen = true
+
+# Hammerhead must combine two 64 MB DIMMs when POST enables interleaving.
+# Previously the 64-128 MB range floated and the nanokernel faulted before video.
+[[cell]]
+name = "8500, 128 MB interleaved POST"
+model = 8500
+ram_mb = 128
+seconds = 12
+screen = true
+gestalt = { mach = 69 }
+
+[[cell]]
+name = "7200, Open Firmware seed"
+model = 7200
+rom = "power-macintosh-7200.rom"
+ram_mb = 40
+seconds = 12
+screen = true
+
+[[cell]]
+name = "7200, original Open Firmware device tree"
+continue = "7200, Open Firmware seed"
+model = 7200
+rom = "power-macintosh-7200.rom"
+ram_mb = 40
+seconds = 21
+of_tree = true
+
+[[cell]]
+name = "7300, Open Firmware seed"
+model = 7300
+rom = "power-macintosh-7300.rom"
+ram_mb = 40
+seconds = 12
+screen = true
+
+[[cell]]
+name = "7300, original Open Firmware device tree"
+continue = "7300, Open Firmware seed"
+model = 7300
+rom = "power-macintosh-7300.rom"
+ram_mb = 40
+seconds = 21
+of_tree = true
+
+[[cell]]
+name = "7500, Open Firmware seed"
+model = 7500
+rom = "power-macintosh-7200.rom"
+ram_mb = 40
+seconds = 12
+screen = true
+
+[[cell]]
+name = "7500, original Open Firmware device tree"
+continue = "7500, Open Firmware seed"
+model = 7500
+rom = "power-macintosh-7200.rom"
+ram_mb = 40
+seconds = 21
+of_tree = true
+
+[[cell]]
+name = "7600, Open Firmware seed"
+model = 7600
+rom = "power-macintosh-7300.rom"
+ram_mb = 40
+seconds = 12
+screen = true
+
+[[cell]]
+name = "7600, original Open Firmware device tree"
+continue = "7600, Open Firmware seed"
+model = 7600
+rom = "power-macintosh-7300.rom"
+ram_mb = 40
+seconds = 21
+of_tree = true
+
+[[cell]]
+name = "8500, Open Firmware seed"
+model = 8500
+rom = "power-macintosh-7200.rom"
+ram_mb = 40
+seconds = 12
+screen = true
+
+[[cell]]
+name = "8500, original Open Firmware device tree"
+continue = "8500, Open Firmware seed"
+model = 8500
+rom = "power-macintosh-7200.rom"
+ram_mb = 40
+seconds = 21
+of_tree = true
+
+[[cell]]
+name = "8600, Open Firmware seed"
+model = 8600
+rom = "power-macintosh-7300.rom"
+ram_mb = 40
+seconds = 12
+screen = true
+
+[[cell]]
+name = "8600, original Open Firmware device tree"
+continue = "8600, Open Firmware seed"
+model = 8600
+rom = "power-macintosh-7300.rom"
+ram_mb = 40
+seconds = 21
+of_tree = true
+
+[[cell]]
+name = "9500, Open Firmware seed"
+model = 9500
+rom = "power-macintosh-7200.rom"
+ram_mb = 40
+seconds = 12
+screen = true
+
+[[cell]]
+name = "9500, original Open Firmware device tree"
+continue = "9500, Open Firmware seed"
+model = 9500
+rom = "power-macintosh-7200.rom"
+ram_mb = 40
+seconds = 21
+of_tree = true
+
+[[cell]]
+name = "9600, Open Firmware seed"
+model = 9600
+rom = "power-macintosh-7300.rom"
+ram_mb = 40
+seconds = 12
+screen = true
+
+[[cell]]
+name = "9600, original Open Firmware device tree"
+continue = "9600, Open Firmware seed"
+model = 9600
+rom = "power-macintosh-7300.rom"
+ram_mb = 40
+seconds = 21
+of_tree = true

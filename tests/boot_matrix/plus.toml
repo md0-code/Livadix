@@ -1,0 +1,38 @@
+# The Macintosh Plus's, 512Ke's, 512K's and 128K's boot matrix
+# (tests/verify.py, check os-boot; the keys are described there): the
+# compact boards of machines/compact.c on the 68000 model, the 512 x 342
+# screen from the top of RAM. Every run is headless, on work copies of the
+# images. The 128K and 512K start from 400K MFS System floppies (System
+# 1.1, 2.0 and 3.2), the Plus from SCSI.
+#
+# System 7.1 runs from System71-Plus.img, which Apple's Installer made on a
+# Plus (its System holds 'PTCH' 117, the Plus ROM's patches). HD240-71.HF7
+# cannot start the Plus: its System holds no 'PTCH' 117 (its 'PTCH' are 0,
+# 376, 630, 890 and 1660; the installer left the Plus out), so the System
+# calls _HGetState, which the Plus ROM lacks, and stops at "unimplemented
+# trap", as it would on the real machine. System 7.5.3 (MacOS753.dsk) runs
+# with its extensions off: one of them is 68020 code (RTD).
+
+model = "mac-plus"
+rom = "mac-plus.rom"
+ram_mb = 4
+# What every System with Gestalt reports on the Plus (Inside Macintosh:
+# Operating System Utilities, "Gestalt Manager"): machine type 4, the 68000
+# (proc 1), no FPU, no MMU, 24-bit addressing.
+gestalt = { mach = 4, proc = 1, "fpu " = 0, "mmu " = 0 }
+
+[media]
+"floppy.img" = { kib = 800, name = "Livadix Floppy" }
+"floppy400.img" = { kib = 400, name = "Livadix 400K" }
+
+# No startup disk: the 128K's flashing disk icon with its question mark.
+[[cell]]
+name = "128K, no disk"
+model = "mac-128k"
+rom = "mac-128k.rom"
+ram_mb = 1
+resolution = "512x342"
+depth = 1
+max = 20_000_000
+question_mark = true
+note = "the disk icon"

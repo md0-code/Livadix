@@ -1,0 +1,43 @@
+# The Macintosh SE's, SE FDHD's and Classic's boot matrix (tests/verify.py,
+# check os-boot; the keys are described there): the boards of
+# machines/se.c on the 68000 model, ADB through the VIA, the 512 x 342
+# screen from the top of RAM. Every run is headless, on work copies of the
+# images. The boot beep sounds after the ROM's RAM test (0.68 s with 4 MB):
+# check chime measures it, so these cells leave it out.
+#
+# HD240-71.HF7's System holds 'PTCH' 630, the patches of the SE's, SE
+# FDHD's and Classic's ROM (version $0276), so System 7.1 runs on all
+# three. System 7.5.3 starts with its extensions off (Shift held): with
+# them on it stops at "One of the File System Access modules could not be
+# installed" (Apple Photo Access, 68020 code), as on the Plus.
+
+model = "mac-se"
+rom = "mac-se.rom"
+ram_mb = 4
+# What every System with Gestalt reports on the SE and SE FDHD (Inside
+# Macintosh: Operating System Utilities, "Gestalt Manager"): machine type
+# 5, the 68000 (proc 1), no FPU, no MMU. The Classic's cells say 17.
+gestalt = { mach = 5, proc = 1, "fpu " = 0, "mmu " = 0 }
+
+[media]
+"floppy.img" = { kib = 800, name = "Livadix Floppy" }
+"floppy-hd.img" = { kib = 1440, name = "Livadix HD Floppy" }
+
+# The Classic's ROM disk: no disk, Command, Option, X and O held from the
+# start until the ROM has looked (it reads the keys while it searches for a
+# startup disk). System 6.0.3 has no Gestalt.
+[[cell]]
+name = "Classic, ROM disk"
+model = "mac-classic"
+rom = "mac-classic.rom"
+resolution = "512x342"
+depth = 1
+max = 200_000_000
+finder = 20_000_000
+input = ["key 37 @2_000_000", "key 3A @2_000_000", "key 07 @2_000_000", "key 1F @2_000_000",
+         "key B7 @14_000_000", "key BA @14_000_000", "key 87 @14_000_000", "key 9F @14_000_000"]
+screen = true
+menu_bar = true
+boot_volume = "Boot Disk"
+post_clean = true
+note = "System 6.0.3 from the ROM disk (Command-Option-X-O)"

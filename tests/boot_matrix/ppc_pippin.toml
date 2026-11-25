@@ -1,0 +1,21 @@
+# The Pippin with its original retail and development ROMs (KINKA 1.0),
+# started without a disc.
+model = "pippin"
+rom = "pippin.rom"
+runner = "ppc"
+jit = true
+ram_mb = 6
+
+[[cell]]
+name = "Pippin retail, empty optical drive control"
+quick = true
+seconds = 15
+system_version = 0
+
+[[cell]]
+name = "Pippin development, empty optical drive control"
+model = "pippin-dev"
+rom = "pippin-dev.rom"
+quick = true
+seconds = 15
+system_version = 0

@@ -1,0 +1,36 @@
+# The Macintosh IIfx's boot matrix (tests/verify.py, check os-boot; the keys
+# are described there). Every run is headless, on work copies of the images.
+# The screen is the Livadix Display Card (the IIfx has no built-in video).
+
+model = "iifx"
+rom = "iifx.rom"
+ram_mb = 20
+# What every System reports on the IIfx (Inside Macintosh, the Gestalt
+# Manager chapter of Operating System Utilities): machine type 13, the 68030
+# (proc 4), the 68882 (fpu 2) and the 68030's MMU (mmu 3).
+gestalt = { mach = 13, proc = 4, "fpu " = 2, "mmu " = 3 }
+
+[media]
+"cd.img" = { kib = 800, name = "Livadix CD" }
+"floppy-hd.img" = { kib = 1440, name = "Livadix HD Floppy" }
+"floppy-dd.img" = { kib = 800, name = "Livadix Floppy" }
+
+# The POST's OSS tick test (ROM offset $4306E): at the IIfx's 40 MHz its
+# wait loop (32769 turns, 13.1 ms by the MC68030's instruction-cache
+# timing) is shorter than the 60.15 Hz tick period, so the ROM logs the
+# test's failure at level 5 (PRAM $F3 = $05, $FB=$92). This is an
+# unresolved emulation discrepancy, not verified physical behaviour; at
+# 16 MHz it passes.
+[[cell]]
+name = "IIfx, POST at 40 MHz"
+resolution = "640x480"
+fresh_pram = true
+max = 60_000_000
+post_log = { "F3" = 0x05 }
+[[cell]]
+name = "IIfx, POST at 16 MHz"
+resolution = "640x480"
+fresh_pram = true
+max = 60_000_000
+args = ["--mhz", "16"]
+post_clean = true

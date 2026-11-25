@@ -1,0 +1,116 @@
+# Native PSX, O'Hare and Valkyrie AV2. Original ROM 6F5724C0.
+model = 6400
+rom = "power-macintosh-6400.rom"
+runner = "ppc"
+jit = true
+ram_mb = 16
+disk_bus = "ata"
+post_clean = true
+
+[media]
+"cd.img" = { kib = 800, name = "Livadix CD" }
+"floppy-hd.img" = { kib = 1440, name = "Livadix HD Floppy" }
+
+[[cell]]
+name = "5400, 8 MiB POST"
+model = 5400
+ram_mb = 8
+seconds = 8
+screen = true
+chime = true
+gestalt = { mach = 74 }
+
+[[cell]]
+name = "5400, 136 MiB POST"
+model = 5400
+ram_mb = 136
+seconds = 8
+screen = true
+chime = true
+gestalt = { mach = 74 }
+
+[[cell]]
+name = "6400, 8 MiB POST"
+model = 6400
+ram_mb = 8
+seconds = 8
+screen = true
+chime = true
+gestalt = { mach = 58 }
+
+[[cell]]
+name = "6400, 136 MiB POST"
+model = 6400
+ram_mb = 136
+seconds = 8
+screen = true
+chime = true
+gestalt = { mach = 58 }
+
+[[cell]]
+name = "5400, 640x480 video PRAM initialization"
+model = 5400
+ram_mb = 40
+resolution = "640x480"
+seconds = 8
+screen = true
+
+[[cell]]
+name = "6400, 512x384 video PRAM initialization"
+model = 6400
+ram_mb = 40
+resolution = "512x384"
+seconds = 8
+screen = true
+
+[[cell]]
+name = "6400, 640x480 video PRAM initialization"
+model = 6400
+ram_mb = 40
+resolution = "640x480"
+seconds = 8
+screen = true
+
+[[cell]]
+name = "6400, 800x600 video PRAM initialization"
+model = 6400
+ram_mb = 40
+resolution = "800x600"
+seconds = 8
+screen = true
+
+[[cell]]
+name = "6400, 832x624 video PRAM initialization"
+model = 6400
+ram_mb = 40
+resolution = "832x624"
+seconds = 8
+screen = true
+
+[[cell]]
+name = "6400, 1024x768 video PRAM initialization"
+model = 6400
+ram_mb = 40
+resolution = "1024x768"
+seconds = 8
+screen = true
+
+[[cell]]
+name = "5400, 12 MiB POST"
+model = 5400
+ram_mb = 12
+seconds = 8
+screen = true
+chime = true
+gestalt = { mach = 74 }
+
+[[cell]]
+name = "6400, 76 MiB POST"
+model = 6400
+ram_mb = 76
+seconds = 8
+screen = true
+chime = true
+gestalt = { mach = 58 }
+
+# The existing optional 68k accelerator also works on this ROM.

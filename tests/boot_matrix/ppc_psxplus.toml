@@ -1,0 +1,62 @@
+# Native PSX+, O'Hare and ATI-264GT. Original ROM 6E92FE08.
+model = 6500
+rom = "power-macintosh-6500.rom"
+runner = "ppc"
+jit = true
+ram_mb = 32
+disk_bus = "ata"
+post_clean = true
+
+[media]
+"cd.img" = { kib = 800, name = "Livadix CD" }
+"floppy-hd.img" = { kib = 1440, name = "Livadix HD Floppy" }
+
+[[cell]]
+name = "5500, 8 MiB POST"
+model = 5500
+ram_mb = 8
+seconds = 8
+screen = true
+chime = true
+
+[[cell]]
+name = "5500, 128 MiB POST"
+model = 5500
+ram_mb = 128
+seconds = 8
+screen = true
+chime = true
+
+[[cell]]
+name = "6500, 8 MiB POST"
+model = 6500
+ram_mb = 8
+seconds = 8
+screen = true
+chime = true
+
+[[cell]]
+name = "6500, 128 MiB POST"
+model = 6500
+ram_mb = 128
+seconds = 8
+screen = true
+chime = true
+
+[[cell]]
+name = "TAM, 8 MiB POST"
+model = "twentieth-anniversary-macintosh"
+resolution = "640x480"
+ram_mb = 8
+seconds = 8
+screen = true
+chime = true
+
+[[cell]]
+name = "TAM, 128 MiB POST"
+model = "twentieth-anniversary-macintosh"
+resolution = "640x480"
+ram_mb = 128
+seconds = 8
+screen = true
+chime = true

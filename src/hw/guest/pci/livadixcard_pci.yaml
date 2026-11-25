@@ -1,0 +1,58 @@
+# The PCI Livadix Display Card's Open Firmware FCode expansion ROM and PowerPC
+# native video driver, built by
+# tools/pcirom.py into src/hw/guest/bin/livadixcard_pci.bin.
+#
+# The PCI expansion ROM header and PCI Data Structure ('PCIR') follow the PCI
+# Local Bus Specification, Revision 2.0, 6.3; the FCode program follows IEEE
+# 1275-1994 and Designing PCI Cards and Drivers for Power Macintosh Computers,
+# chapter 5; the native driver ('ndrv' / 'vido') is a PowerPC PEF container
+# (Mac OS Runtime Architectures, chapter 8) exporting TheDriverDescription
+# and DoDriverIO (Designing PCI Cards and Drivers, chapters 7 and 11).
+
+vendor_id: 0x4D43                # † not assigned by the PCI SIG
+device_id: 0x0001
+revision_id: 0x01
+class_code: 0x038000             # display controller
+name: Livadix,Display
+model: Livadix Display Card
+driver: livadixvideo_pci.bin        # assembled from src/hw/guest/pci/livadixvideo_pci.s
+
+imports:
+  - name: DriverServicesLib
+    symbols:
+      - InstallInterruptFunctions
+      - GetInterruptFunctions
+      - IOCommandIsComplete
+  - name: NameRegistryLib
+    symbols:
+      - RegistryEntryIDCopy
+      - RegistryPropertyCreate
+      - RegistryPropertyGet
+      - RegistryPropertySet
+      - RegistryPropertySetMod
+  - name: VideoServicesLib
+    symbols:
+      - VSLNewInterruptService
+      - VSLDisposeInterruptService
+      - VSLDoInterruptService
+  - name: PCILib
+    symbols:
+      - ExpMgrConfigReadWord
+      - ExpMgrConfigWriteWord
+  - name: InterfaceLib
+    symbols:
+      - NewPtrSys
+      - MakeDataExecutable
+      - GetMemFragment
+
+# Relocations in section 1 (data), from its start (Mac OS Runtime
+# Architectures, chapter 8, "Relocations"):
+#   words 0-15: the imports' transition vectors (RelocImportRun)
+#   words 16-17: DoDriverIO's transition vector [code, TOC] (RelocBySectC, RelocBySectD)
+#   words 18-19: the interrupt handler's [code, TOC]
+relocations:
+  - [import, 16]
+  - [code, 1]
+  - [data, 1]
+  - [code, 1]
+  - [data, 1]
