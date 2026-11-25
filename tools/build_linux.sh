@@ -308,6 +308,7 @@ readme = re.sub(r'\A!\[[^\]]*\]\(assets/[^)]*\)\n\n?', '', (tree / 'README.md').
 (root / 'README.md').write_text(readme, encoding='utf-8', newline='')
 for doc in user_docs:
     shutil.copy2(tree / 'docs' / doc, root / 'docs')
+shutil.copy2(tree / 'LICENSE', root / 'LICENSE')
 
 # The ROM note: the standard names Livadix looks for in roms/ (livadix --list-roms), from a folder without roms/.
 with tempfile.TemporaryDirectory() as empty:
@@ -329,7 +330,7 @@ roms += ['  ' + l for l in listing] + ['', "The ROM's own checksum is checked at
 
 
 # nothing but these
-expected = sorted(['livadix', 'README.md', 'roms/PUT_ROMS_HERE.txt'] +
+expected = sorted(['livadix', 'README.md', 'LICENSE', 'roms/PUT_ROMS_HERE.txt'] +
                   [f'docs/{d}' for d in user_docs])
 actual = sorted(str(f.relative_to(root)) for f in root.rglob('*') if f.is_file())
 if actual != expected:

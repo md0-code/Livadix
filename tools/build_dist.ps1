@@ -204,8 +204,9 @@ Copy-Item $exe (Join-Path $stage $program)
 $readme = [System.IO.File]::ReadAllText((Join-Path $root "README.md")) -replace '^!\[[^\]]*\]\(assets/[^)]*\)\r?\n(\r?\n)?', ''
 [System.IO.File]::WriteAllText((Join-Path $stage "README.md"), $readme)
 # The guides README.md links, the license and the components' notices.
-$userDocs = @("NOTES.md", "CHANGELOG.md", "LICENSE", "THIRD_PARTY.md")
+$userDocs = @("NOTES.md", "CHANGELOG.md", "THIRD_PARTY.md")
 foreach ($doc in $userDocs) { Copy-Item (Join-Path $root "docs/$doc") (Join-Path $stage "docs") }
+Copy-Item (Join-Path $root "LICENSE") $stage
 
 # The Built-in ROM and current documents are embedded in livadix.exe.
 
@@ -235,7 +236,7 @@ $roms += @("", "The ROM's own checksum is checked at start-up.")
 
 
 # --- nothing but these ------------------------------------------------------------------------
-$expected = @($program, "README.md", "roms/PUT_ROMS_HERE.txt") + @($userDocs | ForEach-Object { "docs/$_" })
+$expected = @($program, "README.md", "LICENSE", "roms/PUT_ROMS_HERE.txt") + @($userDocs | ForEach-Object { "docs/$_" })
 $expected = $expected | Sort-Object
 $stageFull = (Resolve-Path $stage).Path
 $actual = Get-ChildItem $stage -Recurse -File | ForEach-Object {
@@ -265,7 +266,7 @@ $distRoot = Join-Path $root "dist"
 New-Item -ItemType Directory -Force $distRoot, (Join-Path $distRoot "docs"), (Join-Path $distRoot "roms") | Out-Null
 # What earlier releases put in the run folder and this one does not: their notes and guides.
 if ($Arch -eq "x64") {
-    foreach ($old in @("data/PUT_MAC_FILES_HERE.txt", "LICENSE", "THIRD_PARTY.md", "docs/NVRAM.md", "docs/ROM-HASHES.md",
+    foreach ($old in @("data/PUT_MAC_FILES_HERE.txt", "docs/LICENSE", "THIRD_PARTY.md", "docs/NVRAM.md", "docs/ROM-HASHES.md",
             "docs/PIPPIN-COMPATIBILITY.md", "docs/POWERPC.md", "docs/POWERPC-SPEED.md",
             "docs/G3-BRINGUP.md", "docs/PHASE6-COMPLETION.md", "PLAN.md", "ISSUES.md",
             "docs/CONFIGURATION.md", "docs/ROMS.md", "docs/HARDWARE.md", "docs/LIMITATIONS.md",

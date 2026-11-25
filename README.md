@@ -115,5 +115,5 @@ system with X11 or Wayland.
 
 ## License
 
-GPL 3.0 ([LICENSE](docs/LICENSE)); bundled components in
+GPL 3.0 ([LICENSE](LICENSE)); bundled components in
 [THIRD_PARTY.md](docs/THIRD_PARTY.md). No Apple ROM or software is included.
